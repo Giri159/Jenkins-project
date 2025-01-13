@@ -24,7 +24,7 @@ pipeline {
         }
         stage ('Image build & push') {
             environment {
-                DOCKER_IMAGE = 'giridaran/ultimate-cicd:${BUILD_NUMBER}'
+                DOCKER_IMAGE = "giridaran/ultimate-cicd:${BUILD_NUMBER}"
                 REGISTRY_CREDENTIALS = credentials('docker-cred')
             }
             steps {
