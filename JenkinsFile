@@ -1,14 +1,14 @@
 pipeline {
     agent {
         docker {
-            image 'abhishekf5/maven-abhishek-docker-agent:v1'
+            image 'maven:3.8.6-openjdk-11'
             args '--user root -v /var/run/docker.sock:/var/run/docker.sock'
         }
     }
     stages{
         stage ('Build') {
             steps {
-                sh 'cd project/spring-boot-app && mvn clean package'
+                sh 'cd Jenkins-project && mvn clean package'
             }
 
         }
@@ -18,7 +18,7 @@ pipeline {
             }
             steps {
                 withCredentials([string(credentialsId: 'sonar', variable: 'SONAR_AUTH_TOKEN')]) {
-                    sh 'cd project/spring-boot-app && mvn sonar:sonar -Dsonar.login=$SONAR_AUTH_TOKEN -Dsonar.host.url=${SONAR_URL}'
+                    sh 'cd Jenkins-project && mvn sonar:sonar -Dsonar.login=$SONAR_AUTH_TOKEN -Dsonar.host.url=${SONAR_URL}'
                 }
             }
         }
